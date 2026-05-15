@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Center | 派工系統2.0</title>
+  <title>Design Center | 設計需求下單 (Enhanced)</title>
   <!-- 引入專業圖示與字體 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* 宇宙感與科技綠配色 - 高對比優化版本 */
-      --primary: #00FFB2; /* 電光綠 */
+      /* 宇宙感與科技綠配色 */
+      --primary: #00FFB2; 
       --primary-hover: #00D192;
       --bg-image: url('https://images.pexels.com/photos/8906872/pexels-photo-8906872.jpeg');
-      --glass-bg: rgba(10, 20, 25, 0.88); /* 提升不透明度以確保背景複雜時文字依然清晰 */
+      --glass-bg: rgba(10, 20, 25, 0.94); 
       --glass-border: rgba(255, 255, 255, 0.15);
-      --text-main: #FFFFFF; /* 純白文字確保最高對比 */
-      --text-muted: #B0C4DE; /* 亮藍灰色，用於提示資訊 */
+      --text-main: #FFFFFF;
+      --text-muted: #B0C4DE;
       --border-gray: rgba(148, 163, 184, 0.3);
       --danger: #FF5252;
       --warning: #FFD600;
-      --warning-light: rgba(255, 214, 0, 0.15);
       --input-bg: rgba(0, 0, 0, 0.5);
     }
 
@@ -40,184 +39,215 @@
 
     /* 左側 Sidebar 規範面板 */
     .sidebar {
-      width: 340px;
-      background: rgba(0, 0, 0, 0.5);
+      width: 380px;
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border-right: 1px solid var(--glass-border);
-      padding: 2.5rem 1.5rem;
+      padding: 2.5rem 1.8rem;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow-y: auto;
+      flex-shrink: 0;
     }
 
-    .sidebar h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 2rem; color: var(--primary); display: flex; align-items: center; gap: 10px; text-shadow: 0 0 12px rgba(0, 255, 178, 0.4); }
-    .rules-card { font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); }
-    .rule-item { margin-bottom: 1.5rem; background: rgba(255, 255, 255, 0.05); padding: 1.2rem; border-radius: 12px; border: 1px solid var(--glass-border); }
-    .rule-item strong { color: var(--primary); display: block; margin-bottom: 6px; font-size: 0.95rem; letter-spacing: 0.5px; }
+    @media (max-width: 1100px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--glass-border); }
+    }
 
-    .timeline-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; color: var(--text-main); }
-    .timeline-table th { text-align: left; padding: 8px; border-bottom: 2px solid var(--border-gray); font-weight: 600; }
-    .timeline-table td { padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .sidebar h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 12px; }
+    .sidebar .intro-text { font-size: 1rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem; }
+    
+    .rule-item { margin-bottom: 1.8rem; background: rgba(255, 255, 255, 0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border); }
+    .rule-item strong { color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem; }
+    .rule-item p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 8px; }
+    
+    .timeline-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.9rem; }
+    .timeline-table th { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border-gray); color: var(--primary); font-weight: 600; }
+    .timeline-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
 
     /* 右側主內容區 */
-    .main-content { flex: 1; padding: 3rem 2rem; display: flex; justify-content: center; z-index: 1; }
-    .form-wrapper { width: 100%; max-width: 850px; }
+    .main-content { flex: 1; padding: 3rem 1.5rem; display: flex; justify-content: center; z-index: 1; overflow-x: hidden; }
+    .form-wrapper { width: 100%; max-width: 900px; }
 
-    /* 毛玻璃卡片主體 */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
-      padding: 3.5rem;
+      padding: 3rem;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
     }
+    @media (max-width: 640px) { .glass-card { padding: 1.5rem; } }
 
-    .form-header { margin-bottom: 2.5rem; text-align: left; }
-    .form-header h1 { font-size: 2.2rem; font-weight: 700; color: #FFFFFF; letter-spacing: -0.5px; }
-    .form-header p { color: var(--text-muted); font-size: 1.05rem; margin-top: 8px; }
+    .form-header { margin-bottom: 2.5rem; }
+    .form-header h1 { font-size: 2.2rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+    .version-tag { background: rgba(0, 255, 178, 0.1); color: var(--primary); font-size: 0.8rem; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--primary); font-family: 'JetBrains Mono'; }
 
-    /* 表單區塊分段 */
-    .section-label { font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin: 2.5rem 0 1.25rem; display: block; border-left: 4px solid var(--primary); padding-left: 12px; }
-    .field-group { margin-bottom: 2rem; }
-    .label-text { display: block; font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; color: #FFFFFF; }
-    .label-text .req { color: var(--danger); margin-left: 4px; font-weight: 700; }
+    .section-label { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin: 3rem 0 1.5rem; display: flex; align-items: center; gap: 10px; }
+    .section-label::after { content: ''; height: 1px; flex: 1; background: linear-gradient(to right, var(--primary), transparent); }
 
-    /* 輸入控制項 */
-    input[type="text"], input[type="date"], select, textarea {
-      width: 100%; padding: 14px 16px; border: 1.5px solid var(--border-gray); border-radius: 10px;
-      font-size: 1rem; background: var(--input-bg); transition: all 0.3s ease;
-      color: #FFFFFF; font-family: inherit;
+    .field-group { margin-bottom: 1.8rem; }
+    .label-wrapper { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+    .label-text { font-size: 1rem; font-weight: 600; color: #FFFFFF; }
+    .label-text .req { color: var(--danger); margin-left: 4px; }
+
+    input, select, textarea {
+      width: 100%; padding: 14px 18px; border: 1.5px solid var(--border-gray); border-radius: 12px;
+      font-size: 1rem; background: var(--input-bg); color: #FFFFFF; font-family: inherit; transition: 0.3s;
     }
-    input::placeholder { color: rgba(255, 255, 255, 0.4); }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 255, 178, 0.25); background: rgba(0, 0, 0, 0.6); }
-    
-    /* 下拉選單深色修正 */
-    select option { background-color: #12181F; color: #FFFFFF; padding: 10px; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 255, 178, 0.2); }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    /* 確認勾選框樣式 */
+    .confirm-box {
+      display: flex; align-items: center; gap: 12px; background: rgba(0, 255, 178, 0.05); 
+      padding: 16px; border-radius: 12px; border: 1px solid var(--primary); cursor: pointer;
+      transition: 0.2s;
+    }
+    .confirm-box:hover { background: rgba(0, 255, 178, 0.1); }
+    .confirm-box input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary); }
 
-    /* 交期警告提示 */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* 文字對照雙欄設計 */
+    .compare-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border: 1px solid var(--border-gray); }
+    .compare-box label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px; }
+    @media (max-width: 640px) { .compare-container { grid-template-columns: 1fr; } }
+
+    /* 優先級 */
+    .priority-options { display: flex; gap: 10px; }
+    .priority-btn { flex: 1; text-align: center; padding: 12px; border-radius: 10px; border: 1px solid var(--border-gray); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+    .priority-btn input { display: none; }
+    .priority-btn.active[data-level="low"] { border-color: #888; color: #888; }
+    .priority-btn.active[data-level="normal"] { border-color: var(--primary); color: var(--primary); background: rgba(0, 255, 178, 0.1); }
+    .priority-btn.active[data-level="high"] { border-color: #FFA500; color: #FFA500; background: rgba(255, 165, 0, 0.1); }
+    .priority-btn.active[data-level="rush"] { border-color: var(--danger); color: var(--danger); background: rgba(255, 82, 82, 0.1); }
+
+    /* 警告提示 */
     .deadline-alert {
-      margin-top: 12px;
-      padding: 14px 16px;
-      background: rgba(255, 214, 0, 0.15);
-      border: 1px solid var(--warning);
-      border-radius: 10px;
-      display: none;
-      align-items: center;
-      gap: 12px;
-      color: var(--warning);
-      font-size: 0.9rem;
-      font-weight: 500;
-      animation: fadeIn 0.4s ease;
-      line-height: 1.4;
-    }
-    .deadline-alert i { font-size: 1.3rem; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-top: 15px; padding: 15px; background: rgba(255, 214, 0, 0.12); border: 1px solid var(--warning);
+      border-radius: 12px; display: none; align-items: flex-start; gap: 12px; color: var(--warning); font-size: 0.9rem; line-height: 1.5;
     }
 
-    /* 檔案上傳區塊 */
-    .file-drop-zone {
-      border: 2px dashed rgba(0, 255, 178, 0.3); border-radius: 15px; padding: 3rem;
-      text-align: center; background: rgba(255, 255, 255, 0.04); transition: all 0.3s ease;
-      cursor: pointer;
+    /* 按鈕樣式群 */
+    .btn-group { display: flex; gap: 15px; margin-top: 1.5rem; justify-content: flex-end; flex-wrap: wrap; }
+    .btn-action {
+      background: rgba(0, 255, 178, 0.1); border: 1px solid var(--primary); color: var(--primary);
+      padding: 10px 20px; border-radius: 10px; font-size: 0.95rem; cursor: pointer; transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 10px; font-weight: 600;
     }
-    .file-drop-zone:hover { border-color: var(--primary); background: rgba(0, 255, 178, 0.08); box-shadow: inset 0 0 20px rgba(0, 255, 178, 0.05); }
-    .file-drop-zone i { font-size: 2.8rem; color: var(--primary); opacity: 0.9; margin-bottom: 12px; display: block; }
-    .file-drop-zone p { font-size: 0.95rem; color: var(--text-main); font-weight: 500; }
-    
-    .file-preview { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
-    .file-item {
-      background: rgba(0, 255, 178, 0.1); border: 1px solid var(--primary); border-radius: 8px;
-      padding: 10px 14px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;
-      color: #FFFFFF; font-weight: 500;
-    }
+    .btn-action:hover { background: var(--primary); color: #000; }
+    .btn-danger { border-color: var(--danger); color: var(--danger); background: rgba(255, 82, 82, 0.05); }
+    .btn-danger:hover { background: var(--danger); color: #FFF; }
 
-    /* 送出按鈕 */
-    .submit-bar { margin-top: 4rem; display: flex; justify-content: flex-end; }
     .btn-main {
-      background: linear-gradient(135deg, var(--primary), #00D192); color: #00150F; border: none; padding: 18px 50px;
-      border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      letter-spacing: 1px;
+      background: var(--primary); color: #00150F; border: none; padding: 18px 60px;
+      border-radius: 14px; font-size: 1.25rem; font-weight: 700; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 12px; transition: 0.3s;
     }
-    .btn-main:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 15px 35px rgba(0, 255, 178, 0.45); }
-    .btn-main:active { transform: translateY(-1px); }
-    .btn-main:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 255, 178, 0.4); }
+    .btn-main:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* 成功顯示 */
-    .success-view { display: none; text-align: center; padding: 5rem 0; }
-    .success-view i { font-size: 6rem; color: var(--primary); margin-bottom: 2rem; filter: drop-shadow(0 0 20px rgba(0, 255, 178, 0.6)); }
-    .success-view h2 { font-size: 2rem; margin-bottom: 1rem; }
+    /* 檔案預覽 */
+    .file-drop-zone { border: 2px dashed var(--border-gray); border-radius: 15px; padding: 2.5rem; text-align: center; background: rgba(255, 255, 255, 0.02); cursor: pointer; transition: 0.3s; }
+    .file-drop-zone:hover { border-color: var(--primary); background: rgba(0, 255, 178, 0.05); }
+    .file-preview { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .file-item { background: rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+
+    /* 預覽 Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); 
+      display: none; justify-content: center; align-items: center; z-index: 999; padding: 20px;
+    }
+    .modal-content {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); 
+      border-radius: 24px; width: 100%; max-width: 700px; max-height: 85vh; 
+      overflow-y: auto; padding: 2.5rem; color: #FFF;
+    }
+    .preview-list { margin-top: 20px; }
+    .preview-item { border-bottom: 1px solid var(--border-gray); padding: 12px 0; display: flex; gap: 15px; }
+    .preview-item strong { width: 120px; color: var(--primary); flex-shrink: 0; }
+    .preview-item span { color: #EEE; white-space: pre-wrap; word-break: break-all; }
+
     .ticket-badge {
-      display: inline-block; padding: 14px 40px; background: rgba(0, 255, 178, 0.12);
-      border: 2px solid var(--primary); color: var(--primary); border-radius: 50px;
-      font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; margin: 2rem 0; font-weight: 700;
-      box-shadow: 0 0 30px rgba(0, 255, 178, 0.25);
+      display: inline-block; padding: 15px 35px; background: rgba(0, 255, 178, 0.1);
+      border: 2px solid var(--primary); color: var(--primary); border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 2rem; margin: 2rem 0;
     }
-
-    .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; line-height: 1.6; }
-    
-    /* 捲軸美化 */
-    ::-webkit-scrollbar { width: 10px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-    ::-webkit-scrollbar-thumb { background: rgba(0, 255, 178, 0.3); border-radius: 5px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    .status-msg { font-size: 1rem; color: var(--primary); margin-top: 10px; display: none; }
+    .hint { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+    .copy-btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-left: 15px; vertical-align: middle; }
+    .copy-btn:hover { background: var(--primary); color: #000; }
   </style>
 </head>
 <body>
 
-  <!-- 左側導航：規範面板 -->
+  <!-- 預覽 Modal -->
+  <div id="previewModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px;">派工單內容預覽</h2>
+      <div id="previewData" class="preview-list"></div>
+      <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-main" onclick="closePreview()">關閉預覽</button>
+      </div>
+    </div>
+  </div>
+
   <aside class="sidebar">
-    <h2><i class="ti ti-rocket"></i> 設計部作業規範</h2>
-    
-    <div class="rules-card">
-      <div class="rule-item">
-        <strong>❗ 填單準則</strong>
-        <p>完整文案為必備資訊。內容未定、規格不明之需求將維持在「待討論」狀態。</p>
-      </div>
+    <h2><i class="ti ti-rocket"></i> Design Center | 設計需求下單</h2>
+    <div class="intro-text">
+      本系統為設計派工單2,0版，為唯一正式需求窗口。透過資訊公開與防火牆機制，提升跨部門協作效率，確保品質與準時。
+      <br><br>
+      <strong>📣 權責說明：</strong><br>
+      僅負責設計及聯繫印刷輸出，不負責決策。最終版本依負責人或決策者為主。
+    </div>
 
-      <div class="rule-item">
-        <strong>⏳ 製作天數參考</strong>
-        <table class="timeline-table">
-          <thead><tr><th>類別</th><th>天數(工作日)</th></tr></thead>
-          <tbody>
-            <tr><td>宣傳品 (海報/立牌)</td><td>1 - 2 天</td></tr>
-            <tr><td>布類 (帆布/旗幟)</td><td>2 - 3 天</td></tr>
-            <tr><td>結構包裝 (盒類)</td><td>14 - 30 天</td></tr>
-            <tr><td>大宗資材 (紙袋)</td><td>45 - 60 天</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="rule-item">
+      <strong>❗【填單前必讀】</strong>
+      <p>• <strong>文案防火牆：</strong>完整文案為必備資訊。文案未定或僅有模糊照片參考者，系統判定為「資訊不全」，案件暫不進入製作。</p>
+    </div>
 
-      <div class="rule-item">
-        <strong>💡 專業提醒</strong>
-        <p>負責設計及聯繫印刷、文宣聯繫，最終決策權由負責人決定。建議預留充足時程以確保產出品質。</p>
-      </div>
+    <div class="rule-item">
+      <strong>⏳【設計製作期】</strong>
+      <table class="timeline-table">
+        <thead><tr><th>需求類別</th><th>建議提單時間</th></tr></thead>
+        <tbody>
+          <tr><td>一般宣傳品</td><td>活動 1 週前</td></tr>
+          <tr><td>包裝設計</td><td>活動 1 - 1.5 個月前</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rule-item">
+      <strong>📦【印刷輸出期 (不含假日)】</strong>
+      <table class="timeline-table">
+        <thead><tr><th>品項</th><th>製作天數</th></tr></thead>
+        <tbody>
+          <tr><td>快速輸出 (海報/立牌)</td><td>1 - 2 天</td></tr>
+          <tr><td>布類 (帆布/旗幟)</td><td>2 - 3 天</td></tr>
+          <tr><td>印刷貼紙</td><td>4 - 7 天</td></tr>
+          <tr><td>結構包裝 (紙盒)</td><td>14 - 30 天</td></tr>
+          <tr><td>大宗資材 (鋁捲/袋)</td><td>45 - 60 天</td></tr>
+        </tbody>
+      </table>
     </div>
   </aside>
 
-  <!-- 右側：主要表單區 -->
   <main class="main-content">
     <div class="form-wrapper">
-      
       <div id="formArea" class="glass-card">
         <header class="form-header">
-          <h1>設計需求申請單 <span style="font-weight: 400; color: var(--primary); font-size: 1.1rem; opacity: 0.8; letter-spacing: 1px;">COSMIC V2.3</span></h1>
-          <p>請完成以下資訊填寫，系統將自動派發至設計序列。</p>
+          <h1>需求申請單 <span class="version-tag">V2.6 PRO</span></h1>
+          <p style="color: var(--text-muted); margin-top: 10px;">專業、精準、高品質的視覺溝通協作平台。</p>
         </header>
 
-        <!-- Section 2 -->
-        <span class="section-label">Section 2 / 基礎資訊</span>
-        
+        <!-- Section 1 -->
+        <span class="section-label">01 申請人資訊</span>
         <div class="grid-2">
           <div class="field-group">
             <label class="label-text">需求單位 <span class="req">*</span></label>
@@ -237,265 +267,317 @@
           </div>
         </div>
 
+        <div class="field-group">
+          <label class="confirm-box" for="understandRules">
+            <input type="checkbox" id="understandRules">
+            <span>請確認是否已理解左側派工單說明與作業規範？ <span class="req">*</span></span>
+          </label>
+        </div>
+
+        <!-- Section 2 -->
+        <span class="section-label">02 專案內容</span>
         <div class="grid-2">
           <div class="field-group">
-            <label class="label-text">活動案號</label>
-            <input type="text" id="caseNo" placeholder="2025-MKT-001">
+            <label class="label-text">活動/案名 <span class="req">*</span></label>
+            <input type="text" id="caseName" placeholder="例如：2025 中秋禮盒預購">
           </div>
           <div class="field-group">
-            <label class="label-text">活動名稱 <span class="req">*</span></label>
-            <input type="text" id="caseName" placeholder="例如：夏季新品發表會">
+            <label class="label-text">活動案號</label>
+            <input type="text" id="caseNo" placeholder="MKT-2025001 (若有)">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="label-text">專案優先級</label>
+          <div class="priority-options">
+            <label class="priority-btn" data-level="low"><input type="radio" name="priority" value="低"> 低</label>
+            <label class="priority-btn active" data-level="normal"><input type="radio" name="priority" value="中" checked> 中</label>
+            <label class="priority-btn" data-level="high"><input type="radio" name="priority" value="高"> 高</label>
+            <label class="priority-btn" data-level="rush"><input type="radio" name="priority" value="緊急"> 緊急</label>
           </div>
         </div>
 
         <!-- Section 3 -->
-        <span class="section-label">Section 3 / 需求分類與時程</span>
-
+        <span class="section-label">03 規格與交期</span>
         <div class="grid-2">
           <div class="field-group">
-            <label class="label-text">預定用途 <span class="req">*</span></label>
+            <label class="label-text">需求類別 <span class="req">*</span></label>
             <select id="purpose" onchange="validateDeadline()">
-              <option value="">請選擇用途...</option>
-              <option>標案</option>
-              <option>產品展會</option>
-              <option>產品包裝</option>
-              <option>電商行銷</option>
-              <option>現場活動</option>
-              <option>餐飲庶務</option>
-              <option>其他</option>
+              <option value="">請選擇分類...</option>
+              <option value="產品包裝">產品包裝 (建議45天前)</option>
+              <option value="一般宣傳">一般宣傳品/DM (建議7天前)</option>
+              <option value="電商社群">電商社群視覺 (建議7天前)</option>
+              <option value="大宗資材">大宗資材 (建議60天前)</option>
+              <option value="其他">其他</option>
             </select>
           </div>
           <div class="field-group">
             <label class="label-text">期望交期 <span class="req">*</span></label>
             <input type="date" id="deadline" onchange="validateDeadline()">
             <div id="deadlineAlert" class="deadline-alert">
-              <i class="ti ti-alert-circle"></i>
-              <span id="alertMsg">期望交期不足，建議與設計部先行溝通。</span>
+              <i class="ti ti-alert-triangle"></i>
+              <span id="alertMsg"></span>
             </div>
-            <p class="hint">一般宣傳品 7 天；包裝設計 1.5 個月。</p>
-          </div>
-        </div>
-
-        <div class="field-group">
-          <label class="label-text">成品規格尺寸／材質</label>
-          <input type="text" id="spec" placeholder="例如：A4, 250磅霧面銅版紙">
-        </div>
-
-        <div class="field-group">
-          <label class="label-text">提供檔案格式 <span class="req">*</span></label>
-          <div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 10px; font-size: 0.95rem;">
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="checkbox" name="format" value="PDF"> PDF</label>
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="checkbox" name="format" value="JPG"> JPG</label>
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="checkbox" name="format" value="PNG"> PNG(去背)</label>
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="checkbox" name="format" value="PPT"> PPT(美化模板)</label>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="field-group">
-            <label class="label-text">是否需要發印？ <span class="req">*</span></label>
-            <select id="isPrint" onchange="toggleLaminate()">
-              <option value="否">否</option>
-              <option value="是，公司自印">是，公司自印 (A4/A3)</option>
-              <option value="是，印刷廠">是，印刷廠</option>
-            </select>
+            <label class="label-text">尺寸材質</label>
+            <input type="text" id="spec" placeholder="例如：A1 海報, 150磅雪銅">
           </div>
-          <div class="field-group" id="laminateGroup" style="display:none;">
-            <label class="label-text">是否需要護貝？</label>
-            <select id="laminate">
-              <option value="否">否</option>
-              <option value="是">是</option>
-            </select>
+          <div class="field-group">
+            <label class="label-text">預計數量</label>
+            <input type="text" id="quantity" placeholder="例如：500 份">
           </div>
         </div>
 
         <!-- Section 4 -->
-        <span class="section-label">Section 4 / 文案與素材</span>
-
+        <span class="section-label">04 內容細節</span>
         <div class="field-group">
-          <label class="label-text">最終確認文案 <span class="req">*</span></label>
-          <textarea id="copy" rows="5" placeholder="請在此貼上完整且正確的文字內容..."></textarea>
-          <p class="hint">執行人員不負責文字最終校對，請確保為最終定案版本。</p>
+          <div class="label-wrapper">
+            <label class="label-text">主要文案資訊 <span class="req">*</span></label>
+            <button class="btn-action" onclick="loadCopyTemplate()">
+              <i class="ti ti-clipboard-list"></i> 載入文案範本
+            </button>
+          </div>
+          <textarea id="copy" rows="6" placeholder="請輸入完整活動資訊..."></textarea>
         </div>
 
         <div class="field-group">
-          <label class="label-text">文字對照表 (修改類適用)</label>
-          <textarea id="diff" rows="3" placeholder="格式：原始內容 -> 修改後內容"></textarea>
+          <label class="label-text">文字對照表 (修改需求適用)</label>
+          <div class="compare-container">
+            <div class="compare-box"><label>原始文字 (Before)</label><textarea id="diff_old" rows="3"></textarea></div>
+            <div class="compare-box"><label>修改後文字 (After)</label><textarea id="diff_new" rows="3"></textarea></div>
+          </div>
         </div>
 
         <div class="field-group">
-          <label class="label-text">附件與照片上傳</label>
+          <label class="label-text">參考風格說明</label>
+          <textarea id="ref_notes" rows="2" placeholder="可貼連結或補充描述..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="label-text">附件上傳</label>
           <div class="file-drop-zone" onclick="document.getElementById('fileInput').click()">
-            <i class="ti ti-alien"></i>
-            <p>點擊或拖放檔案至此處進行傳輸</p>
-            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">支援 JPG, PNG, PDF (建議單檔 5MB 內)</p>
-            <input type="file" id="fileInput" multiple accept="image/*,.pdf" style="display:none;" onchange="handleFileSelect(event)">
+            <i class="ti ti-upload" style="font-size: 2rem; color: var(--primary); margin-bottom: 8px; display: block;"></i>
+            <p>點擊上傳檔案 (限 5MB)</p>
+            <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(event)">
           </div>
           <div class="file-preview" id="filePreview"></div>
         </div>
 
-        <div class="field-group">
-          <label class="label-text">法務／法規審核紀錄</label>
-          <input type="text" id="legal" placeholder="若為包裝類，請註明法規審核人與日期">
+        <div class="btn-group">
+          <button class="btn-action" onclick="previewForm()"><i class="ti ti-eye"></i> 預覽派工單內容</button>
+          <button class="btn-action btn-danger" onclick="clearAllContent()"><i class="ti ti-trash"></i> 清除所有內容</button>
         </div>
 
-        <div class="submit-bar">
+        <div style="text-align: right; margin-top: 3rem; border-top: 1px solid var(--glass-border); padding-top: 2rem;">
+          <div id="statusMsg" class="status-msg"></div>
           <button class="btn-main" id="submitBtn" onclick="submitForm()">
-            <i class="ti ti-planet"></i> 發送需求
+            <i class="ti ti-send"></i> 送出需求申請
           </button>
         </div>
       </div>
 
       <!-- 成功面板 -->
-      <div id="successPanel" class="glass-card success-view">
-        <i class="ti ti-star"></i>
-        <h2>傳送成功</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1rem;">系統案號已產生，準備進入製作序列</p>
-        <div class="ticket-badge" id="displayId">TX-00000000</div>
-        <p style="color: var(--text-main); font-weight: 500;">設計部將於 1 個工作日內審核並回覆作業時程。</p>
-        <button class="btn-main" style="margin-top: 3rem; background: #FFFFFF; color: #00150F;" onclick="location.reload()">發送新訊號</button>
+      <div id="successPanel" class="glass-card" style="display:none; text-align: center; padding: 4rem 0;">
+        <i class="ti ti-circle-check" style="font-size: 6rem; color: var(--primary);"></i>
+        <h2 style="margin-top: 2rem; font-size: 2rem;">申請已成功送達</h2>
+        <div class="ticket-badge"><span id="displayId">TX-XXXXXXXX</span><button class="copy-btn" onclick="copyTicketId()">複製</button></div>
+        <p class="hint">系統已通知設計團隊。如需追蹤進度請憑案號聯繫窗口。</p>
+        <button class="btn-main" style="background: #FFF; color: #000; margin-top: 2rem;" onclick="location.reload()">填寫新需求</button>
       </div>
 
     </div>
   </main>
 
   <script>
-    // 請將下方的網址替換成您的 Google Apps Script 部署網址
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJ6Fx9iNc1EmVOv9sBmMEyUU4hcgRpq3glmP-kReoyvqg7YSY3Z3TwQA3hgDcK3Qho/exec";
+    /** * 整合說明：
+     * 已填入您提供的部署作業 ID 對應之 URL。
+     */
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlHswmlAD2HxPeImK8dnJJGJk7FvRtwTQfnhfQuBdkFCFBOuSmeBbfFjdJud3kdZmG/exec"; 
+
     let selectedFiles = [];
 
-    function toggleLaminate() {
-      const val = document.getElementById('isPrint').value;
-      document.getElementById('laminateGroup').style.display = (val === '是，公司自印') ? 'block' : 'none';
+    // 優先級處理
+    document.querySelectorAll('.priority-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        this.querySelector('input').checked = true;
+      });
+    });
+
+    // 載入範本
+    function loadCopyTemplate() {
+      const template = `【活動標題】：\n【活動日期】：\n【活動地點】：\n【主要內文/優惠資訊】：\n1. \n2. \n【備註】：`;
+      const copyArea = document.getElementById('copy');
+      if(copyArea.value && !confirm("確定載入並覆蓋目前內容嗎？")) return;
+      copyArea.value = template;
     }
 
+    // 交期校驗
     function validateDeadline() {
       const purpose = document.getElementById('purpose').value;
       const deadlineVal = document.getElementById('deadline').value;
       const alertBox = document.getElementById('deadlineAlert');
       const alertMsg = document.getElementById('alertMsg');
-      
-      if (!deadlineVal || !purpose) {
-        alertBox.style.display = 'none';
-        return;
-      }
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const targetDate = new Date(deadlineVal);
-      targetDate.setHours(0, 0, 0, 0);
-
-      const diffDays = Math.floor((targetDate - today) / (1000 * 60 * 60 * 24));
-      
-      let isWarning = false;
-      let minDays = 0;
-
-      if (purpose === '產品包裝') {
-        minDays = 45; 
-        if (diffDays < minDays) {
-          alertMsg.innerText = `包裝設計涉及開模與法規，建議預留 1.5 個月 (目前：${diffDays}天)。`;
-          isWarning = true;
-        }
-      } else {
-        minDays = 9; 
-        if (diffDays < minDays) {
-          alertMsg.innerText = `一般宣傳品建議預留 7 個工作天以上 (目前：${diffDays}天)。`;
-          isWarning = true;
-        }
-      }
-
-      alertBox.style.display = isWarning ? 'flex' : 'none';
+      if (!deadlineVal || !purpose) { alertBox.style.display = 'none'; return; }
+      const diffDays = Math.floor((new Date(deadlineVal) - new Date().setHours(0,0,0,0)) / (86400000));
+      let required = purpose === '產品包裝' ? 45 : (purpose === '大宗資材' ? 60 : 7);
+      if (diffDays < required) {
+        alertMsg.innerHTML = `<strong>⚠️ 時程預警：</strong>建議預留至少 ${required} 天。目前剩餘 ${diffDays < 0 ? 0 : diffDays} 天，工時緊迫，仍可送單，但建議先行聯繫確認。`;
+        alertBox.style.display = 'flex';
+      } else { alertBox.style.display = 'none'; }
     }
 
     function handleFileSelect(e) {
       const preview = document.getElementById('filePreview');
       Array.from(e.target.files).forEach(f => {
-        if (f.size > 5 * 1024 * 1024) {
-          alert(`檔案 ${f.name} 超過 5MB，建議壓縮後再上傳。`);
-          return;
-        }
+        if (f.size > 5 * 1024 * 1024) return;
         selectedFiles.push(f);
         const div = document.createElement('div');
         div.className = 'file-item';
-        div.innerHTML = `<i class="ti ti-atom-2"></i> ${f.name}`;
+        div.innerHTML = `<i class="ti ti-file-description"></i> ${f.name}`;
         preview.appendChild(div);
       });
     }
 
-    const toBase64 = file => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+    // 預覽功能
+    function previewForm() {
+      const data = {
+        "需求單位": document.getElementById('dept').value || "(未填)",
+        "申請人": document.getElementById('applicant').value || "(未填)",
+        "理解作業規範": document.getElementById('understandRules').checked ? "是" : "否 (必填)",
+        "活動案名": document.getElementById('caseName').value || "(未填)",
+        "活動案號": document.getElementById('caseNo').value || "(無)",
+        "優先級": document.querySelector('input[name="priority"]:checked').value,
+        "需求類別": document.getElementById('purpose').value || "(未填)",
+        "期望交期": document.getElementById('deadline').value || "(未填)",
+        "尺寸材質": document.getElementById('spec').value || "(未填)",
+        "發印數量": document.getElementById('quantity').value || "(未填)",
+        "主要文案": document.getElementById('copy').value || "(未填)",
+        "修改前文字": document.getElementById('diff_old').value || "(無)",
+        "修改後文字": document.getElementById('diff_new').value || "(無)",
+        "補充說明": document.getElementById('ref_notes').value || "(無)",
+        "已選檔案": selectedFiles.map(f => f.name).join(', ') || "(無)"
+      };
+      
+      let html = "";
+      for (let key in data) {
+        html += `<div class="preview-item"><strong>${key}</strong><span>${data[key]}</span></div>`;
+      }
+      document.getElementById('previewData').innerHTML = html;
+      document.getElementById('previewModal').style.display = 'flex';
+    }
+
+    function closePreview() { document.getElementById('previewModal').style.display = 'none'; }
+
+    // 清除功能
+    function clearAllContent() {
+      if(!confirm("確定要清除目前填寫的所有內容嗎？此動作不可撤回。")) return;
+      document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(i => i.value = "");
+      document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+      document.getElementById('understandRules').checked = false;
+      document.getElementById('filePreview').innerHTML = "";
+      document.getElementById('deadlineAlert').style.display = "none";
+      selectedFiles = [];
+      // 重置優先級到「中」
+      document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-level="normal"]').classList.add('active');
+      document.querySelector('input[value="中"]').checked = true;
+    }
+
+    function showStatus(msg, type = 'primary') {
+      const el = document.getElementById('statusMsg');
+      el.innerText = msg; el.style.display = 'block';
+      el.style.color = type === 'warning' ? '#FFD600' : 'var(--primary)';
+    }
+
+    const toBase64 = f => new Promise((res, rej) => {
+      const r = new FileReader(); r.readAsDataURL(f);
+      r.onload = () => res(r.result); r.onerror = e => rej(e);
     });
 
     async function submitForm() {
       const btn = document.getElementById('submitBtn');
-      const dept = document.getElementById('dept').value;
-      const applicant = document.getElementById('applicant').value;
-      const caseName = document.getElementById('caseName').value;
-      const copy = document.getElementById('copy').value;
-      const purpose = document.getElementById('purpose').value;
-      const deadline = document.getElementById('deadline').value;
+      const required = {
+        dept: document.getElementById('dept').value,
+        applicant: document.getElementById('applicant').value,
+        caseName: document.getElementById('caseName').value,
+        purpose: document.getElementById('purpose').value,
+        deadline: document.getElementById('deadline').value,
+        copy: document.getElementById('copy').value
+      };
 
-      if(!dept || !applicant || !caseName || !copy || !purpose || !deadline) {
-        alert("請確認必填項目 (*) 皆已填寫完整。");
-        return;
-      }
+      if(Object.values(required).some(v => !v)) { showStatus("請填寫所有 * 必填欄位", 'warning'); return; }
+      if(!document.getElementById('understandRules').checked) { showStatus("請勾選「理解作業規範」以繼續", 'warning'); return; }
 
       btn.disabled = true;
-      btn.innerHTML = '<i class="ti ti-loader-2 animate-spin"></i> 訊號加密中...';
+      showStatus("正在封裝並傳送需求...");
 
-      const tId = "TX-" + new Date().getTime().toString().slice(-8);
-      const formats = Array.from(document.querySelectorAll('input[name="format"]:checked')).map(c => c.value).join(', ');
-
+      const tId = "TX-" + Math.random().toString(36).substr(2, 9).toUpperCase();
       const fileData = [];
       for(let f of selectedFiles) {
-        try {
-          const b64 = await toBase64(f);
-          fileData.push({
-            name: f.name,
-            type: f.type,
-            base64: b64.split(',')[1]
-          });
-        } catch(e) { console.error("File processing error", e); }
+        try { const b64 = await toBase64(f); fileData.push({ name: f.name, type: f.type, base64: b64.split(',')[1] }); } catch(e) {}
       }
 
       const payload = {
-        ticketId: tId,
-        timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
-        dept, applicant, 
+        ticketId: tId, 
+        timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }), 
+        ...required,
         caseNo: document.getElementById('caseNo').value,
-        caseName,
-        level: "N/A",
-        purpose,
-        deadline,
+        priority: document.querySelector('input[name="priority"]:checked').value,
         spec: document.getElementById('spec').value,
-        formats,
-        isPrint: document.getElementById('isPrint').value,
-        laminate: document.getElementById('laminate').value,
-        copy,
-        diff: document.getElementById('diff').value,
-        legal: document.getElementById('legal').value,
+        quantity: document.getElementById('quantity').value,
+        diff_old: document.getElementById('diff_old').value,
+        diff_new: document.getElementById('diff_new').value,
+        ref_notes: document.getElementById('ref_notes').value,
         fileData: fileData
       };
 
       try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: JSON.stringify(payload)
+        if (!SCRIPT_URL) {
+          console.warn("尚未設定 SCRIPT_URL，進入模擬提交模式。");
+          console.log("Payload:", payload);
+          setTimeout(() => {
+            document.getElementById('displayId').innerText = tId;
+            document.getElementById('formArea').style.display = 'none';
+            document.getElementById('successPanel').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 1500);
+          return;
+        }
+
+        // 使用 no-cors 模式確保前端不因跨網域問題卡死
+        await fetch(SCRIPT_URL, { 
+          method: 'POST', 
+          mode: 'no-cors', 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload) 
         });
 
         document.getElementById('displayId').innerText = tId;
         document.getElementById('formArea').style.display = 'none';
         document.getElementById('successPanel').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
       } catch (e) {
-        alert("上傳失敗，請檢查網路連線。");
+        console.error("提交出錯:", e);
+        showStatus("連線異常，請聯繫管理員或稍後再試", 'warning');
         btn.disabled = false;
-        btn.innerHTML = '<i class="ti ti-planet"></i> 提交正式申請';
       }
+    }
+
+    function copyTicketId() {
+      const id = document.getElementById('displayId').innerText;
+      const input = document.createElement("input");
+      input.value = id; document.body.appendChild(input);
+      input.select(); document.execCommand("copy");
+      document.body.removeChild(input);
+      const b = document.querySelector('.copy-btn');
+      b.innerText = "已複製"; setTimeout(() => b.innerText = "複製", 2000);
     }
   </script>
 </body>
