@@ -20,6 +20,7 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
       --danger: #ef4444;
       --warning: #f59e0b;
+      --success: #10b981;
       --sidebar-width: 350px;
     }
 
@@ -45,7 +46,10 @@
       overflow-y: auto;
       flex-shrink: 0;
     }
-    @media (max-width: 1100px) { body { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; border-right: none; } }
+    @media (max-width: 1100px) { 
+      body { flex-direction: column; } 
+      .sidebar { width: 100%; height: auto; position: relative; border-right: none; } 
+    }
 
     .sidebar h2 { 
       font-size: 1.35rem; 
@@ -123,13 +127,44 @@
       box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
     }
 
+    /* checkbox 區塊樣式優化 */
+    .checkbox-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      background: #f8fafc;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .checkbox-item:hover {
+      border-color: var(--primary);
+      background: #eef2ff;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
     .confirm-box { 
       display: flex; align-items: center; gap: 14px; background: #eef2ff; 
       padding: 18px; border-radius: 12px; border: 1px solid #c7d2fe; cursor: pointer;
       transition: 0.2s;
     }
     .confirm-box:hover { background: #e0e7ff; }
-    .confirm-box input { width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer; }
+    .confirm-box input { width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
     .confirm-box span { font-weight: 600; font-size: 0.95rem; color: var(--primary); }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -139,7 +174,7 @@
     .compare-container { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; background: #f8fafc; padding: 20px; border-radius: 14px; border: 1px solid var(--border); }
     .compare-box label { font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px; font-weight: 600; }
 
-    /* 優先級按鈕 (亮色版優化) */
+    /* 優先級與切換按鈕 (亮色版優化) */
     .priority-options { display: flex; gap: 12px; }
     .priority-btn { 
       flex: 1; text-align: center; padding: 14px; border-radius: 12px; border: 1px solid var(--border); 
@@ -151,7 +186,18 @@
     .priority-btn.active[data-level="high"] { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
     .priority-btn.active[data-level="rush"] { border-color: var(--danger); color: var(--danger); background: #fef2f2; }
 
+    /* 用於規格切換的樣式 */
+    .priority-btn.active[data-level="spec-confirmed"] { border-color: var(--primary); color: var(--primary); background: #eef2ff; }
+    .priority-btn.active[data-level="spec-discuss"] { border-color: #10b981; color: #047857; background: #ecfdf5; }
+
     .deadline-alert { margin-top: 15px; padding: 15px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; display: none; gap: 12px; color: #92400e; font-size: 0.9rem; line-height: 1.5; align-items: center; }
+
+    /* 溫馨提示卡片 (邊界加強版) */
+    .info-tip-card { display: flex; align-items: flex-start; gap: 12px; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 18px 22px; border-radius: 12px; color: #065f46; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
+    .boundary-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; border-top: 1px solid #a7f3d0; padding-top: 10px; font-size: 0.82rem; }
+    .boundary-item { display: flex; align-items: center; gap: 6px; }
+    .boundary-item.ok { color: #047857; }
+    .boundary-item.no { color: #b91c1c; }
 
     .btn-group { display: flex; gap: 15px; margin-top: 2.5rem; justify-content: flex-end; flex-wrap: wrap; }
     .btn-action { background: #FFF; border: 1px solid var(--border); color: var(--text-muted); padding: 12px 22px; border-radius: 10px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s; }
@@ -167,7 +213,7 @@
     .btn-main:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(79, 70, 229, 0.35); background: var(--primary-hover); }
     .btn-main:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    /* 檔案上傳區 (亮色專業版) */
+    /* 檔案上傳區 */
     .file-drop-zone {
       border: 2px dashed #cbd5e1; border-radius: 16px; padding: 3.5rem;
       text-align: center; background: #f8fafc; transition: all 0.3s;
@@ -181,9 +227,31 @@
     .file-preview { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 12px; }
     .file-item { background: #FFF; border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
-    /* 預覽 Modal */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 999; padding: 20px; }
-    .modal-content { background: #FFF; border-radius: 24px; width: 100%; max-width: 750px; max-height: 85vh; overflow-y: auto; padding: 3rem; }
+    /* 預覽與自訂 Modal 背景 */
+    .modal-overlay { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(15, 23, 42, 0.7); 
+      backdrop-filter: blur(8px); 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 999; 
+      padding: 20px; 
+    }
+    .modal-content { 
+      background: #FFF; 
+      border-radius: 24px; 
+      width: 100%; 
+      max-width: 750px; 
+      max-height: 85vh; 
+      overflow-y: auto; 
+      padding: 3rem; 
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    }
     .preview-item { border-bottom: 1px solid var(--border); padding: 15px 0; display: flex; gap: 20px; line-height: 1.6; }
     .preview-item strong { width: 140px; color: var(--primary); flex-shrink: 0; font-weight: 700; }
 
@@ -199,6 +267,29 @@
   </style>
 </head>
 <body>
+
+  <!-- 客製化 Alert 視窗 (取代 alert) -->
+  <div id="customAlert" class="modal-overlay" style="z-index: 1001;">
+    <div class="modal-content" style="max-width: 420px; text-align: center; padding: 2.5rem 2rem; border-radius: 20px;">
+      <i class="ti ti-alert-triangle" style="font-size: 3.5rem; color: var(--warning); margin-bottom: 15px; display: block;"></i>
+      <h3 style="font-size: 1.35rem; margin-bottom: 10px; color: var(--text-main);">系統提示</h3>
+      <p id="alertMessage" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;"></p>
+      <button class="btn-main" onclick="closeAlert()" style="padding: 12px 0; width: 100%; justify-content: center; font-size: 1rem; box-shadow: none;">確認</button>
+    </div>
+  </div>
+
+  <!-- 客製化 Confirm 視窗 (取代 confirm) -->
+  <div id="customConfirm" class="modal-overlay" style="z-index: 1001;">
+    <div class="modal-content" style="max-width: 420px; text-align: center; padding: 2.5rem 2rem; border-radius: 20px;">
+      <i class="ti ti-help-circle" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 15px; display: block;"></i>
+      <h3 style="font-size: 1.35rem; margin-bottom: 10px; color: var(--text-main);">確認操作</h3>
+      <p id="confirmMessage" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;"></p>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn-action" onclick="resolveConfirm(false)" style="flex: 1; justify-content: center; padding: 12px 0;">取消</button>
+        <button class="btn-main" onclick="resolveConfirm(true)" style="flex: 1; justify-content: center; padding: 12px 0; box-shadow: none;">確定</button>
+      </div>
+    </div>
+  </div>
 
   <!-- 預覽視窗 -->
   <div id="previewModal" class="modal-overlay">
@@ -216,8 +307,17 @@
   <!-- Sidebar 規範 -->
   <aside class="sidebar">
     <h2><i class="ti ti-rocket"></i> 設計部需求派工 2.0</h2>
-    <div class="intro-text">設計部的正式需求窗口。透過資訊公開與資訊防火牆機制，我們期望能提升跨部門協作效率，確保所有案件皆能如期、如質完成。</div>
+    <div class="intro-text">設計部的正式需求窗口。透過資訊公開與資訊防火牆機制，我們期望能提升跨部門協作效率，確保所有案件皆能如期完成。</div>
     
+    <div class="rule-item" style="border-left: 4px solid var(--warning); background: #fffbeb;">
+      <strong>🛡️ 修改及作廢機制</strong>
+      <p style="color: #b45309; font-size: 0.85rem; line-height: 1.5;">
+        1. 經設計部瀏覽需求後，若有需調整規格之需求並在討論後取得共識，設計部將直接於後台修改所有資訊。<br>
+        2. 若突發無製作需求，或目前技術現況無法達成之派工單，設計部將在告知後轉為廢棄單處理。<br>
+        3. 對於未定案、需發想活動細節、或包含翻譯等無設計需求之派工單，設計部將予以退件或作廢。
+      </p>
+    </div>
+
     <div class="rule-item">
       <strong>⏳ 作業期程參考</strong>
       <table class="timeline-table">
@@ -232,7 +332,7 @@
     
     <div class="rule-item">
       <strong>❗ 提單準則</strong>
-      <p>希望各位務必提供「最終定案」之文案。內容未定或規格不明之需求，將維持於待討論狀態。</p>
+      <p>希望各位務必提供最終定案之文案。內容未定或規格不明之需求，會暫時維持於待討論狀態。</p>
     </div>
   </aside>
 
@@ -241,7 +341,7 @@
       <!-- 表單本體 -->
       <div id="formArea" class="card">
         <header class="form-header">
-          <h1>需求申請單 <span class="version-tag">V3.0 LIGHT</span></h1>
+          <h1>需求申請單 <span class="version-tag">V2.0</span></h1>
           <p>請填寫以下資訊，將於收件後儘速排程。</p>
         </header>
 
@@ -253,7 +353,7 @@
             <select id="dept">
               <option value="">請選擇單位...</option>
               <option>行銷／電商</option><option>專案部</option>
-              <option>瑞民店</option><option>生技研發</option><option>泰武合作社</option>
+              <option>瑞民店</option><option>生技／研發</option><option>倉儲管理</option><option>行政／財務</option><option>泰武合作社</option>
             </select>
           </div>
           <div class="field-group">
@@ -262,10 +362,18 @@
           </div>
         </div>
         
-        <div class="field-group">
+        <!-- 雙核取方塊防護機制區 -->
+        <div class="field-group" style="display: flex; flex-direction: column; gap: 12px;">
           <label class="confirm-box" for="rulesCheck">
             <input type="checkbox" id="rulesCheck">
             <span>我已詳閱並理解作業規範與提單準則 <span class="req">*</span></span>
+          </label>
+          
+          <label class="confirm-box" for="defenseCheck" style="background: #fffbeb; border: 1px solid #fde68a; cursor: pointer;">
+            <input type="checkbox" id="defenseCheck">
+            <span style="color: #b45309; font-weight: 500;">
+              經設計部瀏覽需求後，若有需調整規格之需求並在討論後取得共識，允許設計部直接修改單據資訊；若突發無製作需求或目前技術尚未能達成，設計部將直接轉為廢棄單。 <span class="req">*</span>
+            </span>
           </label>
         </div>
 
@@ -294,6 +402,49 @@
 
         <!-- Section 3 -->
         <span class="section-label">03 規格與時程</span>
+        
+        <!-- 規格確認狀態雙軌切換 -->
+        <div class="field-group">
+          <label class="label-text">規格確定狀態 <span class="req">*</span></label>
+          <div class="priority-options" style="margin-top: 10px;">
+            <label class="priority-btn active" id="specStatusConfirmed" data-level="spec-confirmed" onclick="setSpecStatus('confirmed')">
+              <input type="radio" name="specStatus" value="規格已確定" checked> 規格已確定 (直接製作)
+            </label>
+            <label class="priority-btn" id="specStatusDiscuss" data-level="spec-discuss" onclick="setSpecStatus('discuss')">
+              <input type="radio" name="specStatus" value="規格未定 (僅限尺寸/材質諮詢)"> 規格未定 (僅限尺寸、材質與工藝技術諮詢)
+            </label>
+          </div>
+        </div>
+
+        <!-- 規格諮詢提示 -->
+        <div id="discussTip" class="info-tip-card" style="display: none; flex-direction: column;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <i class="ti ti-info-circle" style="font-size: 1.4rem; margin-top: 2px;"></i>
+            <div>
+              <strong>💡 規格諮詢模式已開啟（建立雙向防線）：</strong><br>
+              提單人可先留空不填「尺寸材質」與「數量」。送單後，設計部將協助評估合適的印刷工藝與合理發印量，並於後台直接更改需求。此諮詢<strong>僅限於設計、材料與印製工法層面</strong>，請遵守以下邊界：
+            </div>
+          </div>
+          
+          <div class="boundary-list">
+            <div>
+              <strong style="color: #047857; display: block; margin-bottom: 6px;"><i class="ti ti-circle-check"></i> 🟢 受理技術諮詢</strong>
+              <div class="boundary-item ok"><i class="ti ti-check"></i> 印刷尺寸與容器配對</div>
+              <div class="boundary-item ok"><i class="ti ti-check"></i> 材質、加工與塗佈建議</div>
+              <div class="boundary-item ok"><i class="ti ti-check"></i> 成本與基本印量評估</div>
+            </div>
+            <div>
+              <strong style="color: #b91c1c; display: block; margin-bottom: 6px;"><i class="ti ti-circle-x"></i> 🔴 拒絕受理範圍</strong>
+              <div class="boundary-item no"><i class="ti ti-x"></i> 協助發想活動細節/流程</div>
+              <div class="boundary-item no"><i class="ti ti-x"></i> 負責完整外語翻譯撰寫</div>
+              <div class="boundary-item no"><i class="ti ti-x"></i> 無文案或參考概念之簡報製作</div>
+            </div>
+          </div>
+          <div style="font-size: 0.8rem; color: #b45309; margin-top: 10px; font-weight: 600;">
+            ⚠️ 請注意：即使選擇此諮詢模式，「步驟 04 主要文案內容」仍需填寫完整定案之文案，不接受僅提供模糊概念件。
+          </div>
+        </div>
+
         <div class="grid-2">
           <div class="field-group">
             <label class="label-text">需求類別 <span class="req">*</span></label>
@@ -317,23 +468,58 @@
         
         <div class="grid-2">
           <div class="field-group">
-            <label class="label-text">尺寸與材質需求</label>
+            <label class="label-text" id="specLabel">尺寸與材質需求</label>
             <input type="text" id="spec" placeholder="例如：A1 海報 / 150磅雪銅紙">
           </div>
           <div class="field-group">
-            <label class="label-text">預計製作數量</label>
+            <label class="label-text" id="quantityLabel">預計製作數量</label>
             <input type="text" id="quantity" placeholder="例如：500 份">
+          </div>
+        </div>
+
+        <!-- 檔案格式 & 發印欄位 -->
+        <div class="field-group">
+          <label class="label-text">提供檔案格式 <span class="req">*</span></label>
+          <div class="checkbox-container">
+            <label class="checkbox-item"><input type="checkbox" name="format" value="PDF"> PDF</label>
+            <label class="checkbox-item"><input type="checkbox" name="format" value="JPG"> JPG</label>
+            <label class="checkbox-item"><input type="checkbox" name="format" value="PNG"> PNG(去背)</label>
+            <label class="checkbox-item"><input type="checkbox" name="format" value="PPT"> PPT(美化模板)</label>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label class="label-text">是否需要發印？ <span class="req">*</span></label>
+            <select id="isPrint" onchange="toggleLaminate()">
+              <option value="否">否</option>
+              <option value="是，公司自印">是，公司自印 (A4/A3)</option>
+              <option value="是，印刷廠">是，印刷廠</option>
+            </select>
+          </div>
+          <div class="field-group" id="laminateGroup" style="display:none;">
+            <label class="label-text">是否需要護貝？</label>
+            <select id="laminate">
+              <option value="否">否</option>
+              <option value="是">是</option>
+            </select>
           </div>
         </div>
 
         <!-- Section 4 -->
         <span class="section-label">04 細節資訊</span>
         <div class="field-group">
-          <div class="label-wrapper">
+          <div class="label-wrapper" style="align-items: center;">
             <label class="label-text">主要文案內容 <span class="req">*</span></label>
-            <button class="btn-action" onclick="loadTemplate()">
-              <i class="ti ti-copy"></i> 載入範本
-            </button>
+            <!-- 升級版下拉選單範本載入器 -->
+            <select id="templateSelect" onchange="loadSelectedTemplate()" style="width: auto; padding: 6px 14px; font-size: 0.85rem; border-radius: 10px; border: 1px solid var(--border); background: #ffffff; cursor: pointer; color: var(--text-main); font-weight: 600;">
+              <option value="">📋 快速載入範本...</option>
+              <option value="generalEvent">一般活動宣傳範本</option>
+              <option value="biotechCoffee">生技部 - 咖啡產品推廣</option>
+              <option value="newProduct">新品上市規劃範本</option>
+              <option value="packagingInfo">食品包裝/法規成分標示</option>
+              <option value="socialPromo">社群日常貼文/圖文推廣</option>
+            </select>
           </div>
           <textarea id="copy" rows="6" placeholder="請在此貼上完整定案之文字內容..."></textarea>
         </div>
@@ -387,8 +573,19 @@
         <p style="color: var(--text-muted);">系統已自動生成案號，請紀錄以利追蹤：</p>
         <div class="ticket-badge"><span id="displayId"></span><button class="copy-btn" onclick="copyId()">複製</button></div>
         <p style="margin-top: 1rem; font-weight: 500;">設計部將於 1 個工作日內審核並排入序列。</p>
-        <button class="btn-main" style="background:#f1f5f9; color:var(--text-main); margin-top: 3.5rem; box-shadow: none;" onclick="location.reload()">填寫下一份</button>
-      </div>
+        
+        <!-- 新增的即時進度看板確認區塊 -->
+        <div style="margin: 2.5rem auto 1.5rem; padding: 24px; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 16px; text-align: left; max-width: 500px;">
+          <h3 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <i class="ti ti-columns"></i> 即時設計進度追蹤
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            需求送出後，您可以憑上方產生的案件編號（TX-XXXXXX），點擊下方按鈕前往「設計部進度看板」確認目前的排程進度與詳細狀態。
+          </p>
+          <a href="https://docs.google.com/spreadsheets/d/1KMcp72tUFXoyelZRbYgQd5--jnBhIVUS3OcJ9dJ17rk/edit?usp=sharing" target="_blank" class="btn-main" style="width: 100%; justify-content: center; text-decoration: none; font-size: 1rem; padding: 14px; box-shadow: none;">
+            <i class="ti ti-external-link"></i> 前往設計進度看板
+          </a>
+        </div>
     </div>
   </main>
 
@@ -397,17 +594,106 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRU24qBubqFPHYQa0kkSVzRe8LEB_5W3QfS6_nqXkdwc256NKzNa8PK6H_mIrWQBii/exec";
     let selectedFiles = [];
 
+    // 客製化 Alert / Confirm 狀態管理
+    let confirmPromiseResolver = null;
+
+    function showAlert(msg) {
+      document.getElementById('alertMessage').innerText = msg;
+      document.getElementById('customAlert').style.display = 'flex';
+    }
+
+    function closeAlert() {
+      document.getElementById('customAlert').style.display = 'none';
+    }
+
+    function showConfirm(msg) {
+      document.getElementById('confirmMessage').innerText = msg;
+      document.getElementById('customConfirm').style.display = 'flex';
+      return new Promise((resolve) => {
+        confirmPromiseResolver = resolve;
+      });
+    }
+
+    function resolveConfirm(val) {
+      document.getElementById('customConfirm').style.display = 'none';
+      if (confirmPromiseResolver) {
+        confirmPromiseResolver(val);
+        confirmPromiseResolver = null;
+      }
+    }
+
+    // 處理規格狀態動態調整
+    function setSpecStatus(status) {
+      const confirmedBtn = document.getElementById('specStatusConfirmed');
+      const discussBtn = document.getElementById('specStatusDiscuss');
+      const discussTip = document.getElementById('discussTip');
+      const specInput = document.getElementById('spec');
+      const qtyInput = document.getElementById('quantity');
+      
+      if (status === 'confirmed') {
+        confirmedBtn.classList.add('active');
+        discussBtn.classList.remove('active');
+        confirmedBtn.querySelector('input').checked = true;
+        
+        discussTip.style.display = 'none';
+        specInput.placeholder = "例如：A1 海報 / 150磅雪銅紙";
+        qtyInput.placeholder = "例如：500 份";
+        document.getElementById('specLabel').innerHTML = '尺寸與材質需求';
+        document.getElementById('quantityLabel').innerHTML = '預計製作數量';
+      } else {
+        discussBtn.classList.add('active');
+        confirmedBtn.classList.remove('active');
+        discussBtn.querySelector('input').checked = true;
+        
+        discussTip.style.display = 'flex';
+        specInput.placeholder = "（免填）送單後，將由設計部針對印刷與工法給予材質建議";
+        qtyInput.placeholder = "（免填）將由設計部依預算協助評估起印量";
+        document.getElementById('specLabel').innerHTML = '尺寸與材質需求 <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">(選填)</span>';
+        document.getElementById('quantityLabel').innerHTML = '預計製作數量 <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">(選填)</span>';
+        
+        showAlert("已開啟「技術規格諮詢」模式！\n請注意：本選項僅限「尺寸、材質與發印技術」討論，活動內容發想、文案企劃或外語翻譯不屬於諮詢範疇，步驟 04 的文案內容依然為必填。");
+      }
+    }
+
     // 處理優先級點擊
-    document.querySelectorAll('.priority-btn').forEach(btn => {
+    document.querySelectorAll('.priority-options:not(:has(#specStatusConfirmed)) .priority-btn').forEach(btn => {
       btn.onclick = function(){
-        document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.priority-options:not(:has(#specStatusConfirmed)) .priority-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active'); 
         this.querySelector('input').checked = true;
       };
     });
 
-    function loadTemplate() { 
-      document.getElementById('copy').value = `【活動標題】：\n【日期地點】：\n【活動內容/優惠】：\n1. \n2. \n【備註】：`; 
+    // 動態下拉選單載入各部門文案範本（含防呆邏輯）
+    async function loadSelectedTemplate() {
+      const select = document.getElementById('templateSelect');
+      const val = select.value;
+      if (!val) return;
+
+      const templates = {
+        generalEvent: `【活動名稱】：\n【活動時間】：\n【活動地點】：\n【活動對象】：\n【核心主打/主視覺訴求】：\n【活動優惠/促銷方案】：\n1. \n2. \n【報名連結/聯絡方式】：\n【特別備註事項】：`,
+        
+        biotechCoffee: `【產品名稱】：\n【咖啡豆產地/莊園】：\n【處理法/焙度】：（例如：日曬 / 中深焙）\n【風味描述/前中後調】：（例如：花香柑橘、巧克力堅果）\n【核心特色/生技研發】：（例如：添加低溫萃取精華、高水溶性膳食纖維）\n【主要受眾訴求】：（例如：久坐上班族、熱愛手沖者）\n【包裝文案/Slogan】：\n【商品容量/規格】：（例如：半磅袋裝、濾掛10入裝）\n【沖煮建議/食用說明】：\n【保存期限與注意事項】：`,
+        
+        newProduct: `【新品名稱】：\n【預計上市日期】：\n【產品定位與客群】：\n【三大核心研發賣點】：\n1. \n2. \n3. \n【產品規格與建議零售價】：\n【主要販售通路】：\n【設計風格期待】：（例如：極簡科技感、日系溫馨插畫、自然有機風）`,
+        
+        packagingInfo: `【商品中文品名】：\n【完整成分標示】：\n【過敏原資訊】：（例如：本產品含有大豆及麩質製品）\n【淨重/容量】：\n【營養標示數據】：（可附於附件，或在此條列：熱量/蛋白質/脂肪...）\n【製造/委製/經銷商資訊】：\n【原產地/保存期限/有效日期標示】：\n【法規警語與特別注意事項】：`,
+        
+        socialPromo: `【貼文主題】：\n【發文平台】：（例如：FB、IG、LINE官方帳號）\n【主軸推廣內文】：\n【畫面排版要求/文字重點】：\n【推薦標籤 (Hashtags)】：\n【導購或互動連結】：`
+      };
+
+      const currentText = document.getElementById('copy').value.trim();
+      if (currentText) {
+        // 使用我們設計的客製化非阻塞式 Confirm 視窗
+        const confirmed = await showConfirm("選擇新範本將會蓋掉目前輸入的內容，確定要載入嗎？");
+        if (!confirmed) {
+          select.value = ""; // 退回空選狀態
+          return;
+        }
+      }
+
+      document.getElementById('copy').value = templates[val];
+      select.value = ""; // 載入後復原，方便使用者重新選擇
     }
     
     function validateDeadline() {
@@ -421,14 +707,28 @@
       let minRequired = (type === '產品包裝') ? 45 : (type === '大宗資材' ? 60 : 7);
       
       if (diff < minRequired) {
-        document.getElementById('alertMsg').innerText = `預留 ${diff < 0 ? 0 : diff} 天，低於建議工期 ${minRequired} 天。仍可送單，但建議連繫。`;
+        document.getElementById('alertMsg').innerText = `預留 ${diff < 0 ? 0 : diff} 天，低於建議工期 ${minRequired} 天。仍可送單，但建議聯繫。`;
         alertBox.style.display = 'flex';
       } else { alertBox.style.display = 'none'; }
     }
 
-    function handleFiles(e) {
-      Array.from(e.target.files).forEach(f => {
-        if (f.size > 5 * 1024 * 1024) { alert(`檔案 ${f.name} 超過 5MB，已跳過。`); return; }
+    function toggleLaminate() {
+      const isPrint = document.getElementById('isPrint').value;
+      const laminateGroup = document.getElementById('laminateGroup');
+      if (isPrint === '是，公司自印') {
+        laminateGroup.style.display = 'block';
+      } else {
+        laminateGroup.style.display = 'none';
+        document.getElementById('laminate').value = '否'; // 重設為預設值
+      }
+    }
+
+    function handleFiles(event) {
+      Array.from(event.target.files).forEach(f => {
+        if (f.size > 5 * 1024 * 1024) { 
+          showAlert(`檔案 "${f.name}" 超過 5MB 的限制，已予以跳過。`); 
+          return; 
+        }
         selectedFiles.push(f);
         const div = document.createElement('div'); div.className = 'file-item';
         div.innerHTML = `<i class="ti ti-file-import"></i> ${f.name}`;
@@ -437,15 +737,33 @@
     }
 
     function preview() {
+      // 取得勾選的檔案格式
+      const selectedFormats = [];
+      document.querySelectorAll('input[name="format"]:checked').forEach(cb => {
+        selectedFormats.push(cb.value);
+      });
+
+      const isPrintVal = document.getElementById('isPrint').value;
+      const laminateVal = document.getElementById('laminate').value;
+      const specStatusVal = document.querySelector('input[name="specStatus"]:checked').value;
+
       const data = {
         "需求單位": document.getElementById('dept').value || "未填",
         "申請人": document.getElementById('applicant').value || "未填",
         "規範確認": document.getElementById('rulesCheck').checked ? "已確認" : "未勾選",
+        "變更與作廢條款": document.getElementById('defenseCheck').checked ? "已同意" : "未勾選",
         "案名": document.getElementById('caseName').value || "未填",
-        "交期": document.getElementById('deadline').value || "未填",
+        "規格確定狀態": specStatusVal,
+        "期望交期": document.getElementById('deadline').value || "未填",
+        "提供檔案格式": selectedFormats.length > 0 ? selectedFormats.join(', ') : "未填",
+        "是否發印": isPrintVal,
+        "是否護貝": isPrintVal === '是，公司自印' ? laminateVal : "不適用 (未選自印)",
+        "尺寸材質": document.getElementById('spec').value || (specStatusVal === '規格已確定' ? "未填" : "待設計部技術諮詢"),
+        "製作數量": document.getElementById('quantity').value || (specStatusVal === '規格已確定' ? "未填" : "待設計部計算印量"),
         "文案摘要": (document.getElementById('copy').value.substring(0, 50) + "...") || "未填",
         "附件數量": selectedFiles.length + " 個"
       };
+      
       let html = ""; 
       for(let k in data) html += `<div class="preview-item"><strong>${k}</strong><span>${data[k]}</span></div>`;
       document.getElementById('previewData').innerHTML = html; 
@@ -454,14 +772,16 @@
     
     function closePreview() { document.getElementById('previewModal').style.display = 'none'; }
     
-    // 改良後的手動清除功能，確保在 Canvas 環境中能正常運作且不需重新整理頁面
-    function clearForm() {
-      if(!confirm("確定要清除所有已填寫的內容嗎？")) return;
+    // 改良的手動清除功能（使用客製化 Confirm 視窗）
+    async function clearForm() {
+      const confirmed = await showConfirm("確定要清除所有已填寫的內容嗎？");
+      if(!confirmed) return;
       
       // 清除文字與下拉選單
       document.getElementById('dept').value = "";
       document.getElementById('applicant').value = "";
       document.getElementById('rulesCheck').checked = false;
+      document.getElementById('defenseCheck').checked = false;
       document.getElementById('caseName').value = "";
       document.getElementById('caseNo').value = "";
       document.getElementById('deadline').value = "";
@@ -471,7 +791,13 @@
       document.getElementById('diff_old').value = "";
       document.getElementById('diff_new').value = "";
       document.getElementById('ref_notes').value = "";
+      document.getElementById('templateSelect').value = "";
       
+      // 清除自訂欄位
+      document.querySelectorAll('input[name="format"]').forEach(cb => cb.checked = false);
+      document.getElementById('isPrint').value = "否";
+      toggleLaminate();
+
       // 隱藏警告盒
       document.getElementById('deadlineAlert').style.display = 'none';
       
@@ -480,33 +806,48 @@
       selectedFiles = [];
       
       // 重設優先級按鈕 (預設回到中)
-      document.querySelectorAll('.priority-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.priority-options:not(:has(#specStatusConfirmed)) .priority-btn').forEach(btn => btn.classList.remove('active'));
       const normalBtn = document.querySelector('[data-level="normal"]');
       if (normalBtn) {
         normalBtn.classList.add('active');
         normalBtn.querySelector('input').checked = true;
       }
 
+      // 重設規格確定狀態 (預設回到規格已確定)
+      setSpecStatus('confirmed');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     const toB64 = f => new Promise((res, rej) => { 
       const r = new FileReader(); r.readAsDataURL(f); 
-      r.onload = () => res(r.result); r.onerror = e => rej(e); 
+       r.onload = () => res(r.result); r.onerror = e => rej(e); 
     });
 
     async function submitForm() {
       const btn = document.getElementById('submitBtn');
+      
+      const selectedFormats = [];
+      document.querySelectorAll('input[name="format"]:checked').forEach(cb => {
+        selectedFormats.push(cb.value);
+      });
+
+      const specStatusVal = document.querySelector('input[name="specStatus"]:checked').value;
+
       const data = {
         dept: document.getElementById('dept').value,
         applicant: document.getElementById('applicant').value,
         caseName: document.getElementById('caseName').value,
         caseNo: document.getElementById('caseNo').value,
-        priority: document.querySelector('input[name="priority"]:checked').value,
+        priority: document.querySelector('.priority-options:not(:has(#specStatusConfirmed)) input[name="priority"]:checked').value,
+        specStatus: specStatusVal,
         purpose: document.getElementById('purpose').value,
         deadline: document.getElementById('deadline').value,
-        spec: document.getElementById('spec').value,
-        quantity: document.getElementById('quantity').value,
+        spec: document.getElementById('spec').value || (specStatusVal === '規格已確定' ? "" : "（待與設計部技術諮詢）"),
+        quantity: document.getElementById('quantity').value || (specStatusVal === '規格已確定' ? "" : "（待與設計部評估起印量）"),
+        formats: selectedFormats.join(', '), // 將陣列壓平發送給 GAS 試算表
+        isPrint: document.getElementById('isPrint').value,
+        laminate: document.getElementById('isPrint').value === '是，公司自印' ? document.getElementById('laminate').value : "無",
         copy: document.getElementById('copy').value,
         diff_old: document.getElementById('diff_old').value,
         diff_new: document.getElementById('diff_new').value,
@@ -515,8 +856,17 @@
         timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
       };
 
-      if(!data.dept || !data.applicant || !data.caseName || !data.copy || !document.getElementById('rulesCheck').checked) { 
-        alert("請填寫所有必填項 (*) 並勾選規範確認。"); return; 
+      // 欄位完整性驗證（加入 defenseCheck 核取狀態驗證）
+      if(!data.dept || !data.applicant || !data.caseName || !data.copy || 
+         !document.getElementById('rulesCheck').checked || 
+         !document.getElementById('defenseCheck').checked) { 
+        showAlert("請填寫所有必填欄位 (*) 並勾選「理解作業規範」與「同意變更與作廢條款」。"); 
+        return; 
+      }
+
+      if(selectedFormats.length === 0) {
+        showAlert("請至少選擇一種「提供檔案格式」。");
+        return;
       }
       
       btn.disabled = true;
@@ -535,7 +885,9 @@
         document.getElementById('successPanel').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch(e) { 
-        alert("提交失敗，請檢查網路。"); btn.disabled = false; btn.innerHTML = '<i class="ti ti-send"></i> 送出需求申請';
+        showAlert("提交失敗，請檢查網路連線狀態。"); 
+        btn.disabled = false; 
+        btn.innerHTML = '<i class="ti ti-send"></i> 送出需求申請';
       }
     }
 
