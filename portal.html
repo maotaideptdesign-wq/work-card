@@ -241,8 +241,8 @@
       <a href="#contact">聯絡</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-ghost" href="./index.html"><i class="ti ti-layout-kanban"></i> 進度看板</a>
-      <a class="btn btn-primary" href="https://maotaideptdesign-wq.github.io/work-card/"><i class="ti ti-plus"></i> 我要下單</a>
+      <a class="btn btn-ghost" href="./kanban.html"><i class="ti ti-layout-kanban"></i> 進度看板</a>
+      <a class="btn btn-primary" href="./index.html"><i class="ti ti-plus"></i> 我要下單</a>
     </div>
   </div>
 </nav>
@@ -254,8 +254,8 @@
     <h1>把需求交給我們，<br>隨時看得到<span class="accent">案件走到哪</span>。</h1>
     <p>這裡是設計部的正式下單窗口。填一張需求單，系統自動編號，之後你可以在進度看板上憑案號追蹤排程與狀態——不必再私訊問「做好了嗎」。</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="https://maotaideptdesign-wq.github.io/work-card/"><i class="ti ti-file-plus"></i> 填寫需求單</a>
-      <a class="btn btn-ghost" href="./index.html"><i class="ti ti-search"></i> 查詢我的案件</a>
+      <a class="btn btn-primary" href="./index.html"><i class="ti ti-file-plus"></i> 填寫需求單</a>
+      <a class="btn btn-ghost" href="./kanban.html"><i class="ti ti-search"></i> 查詢我的案件</a>
     </div>
     <div class="lookup">
       <i class="ti ti-ticket lead"></i>
@@ -320,7 +320,7 @@
         <h2>下單前，先讀這三件事</h2>
         <p>照著規範提單，案件就能順順地跑完全程，少一趟來回。</p>
       </div>
-      <a class="btn btn-ghost" href="https://maotaideptdesign-wq.github.io/work-card/"><i class="ti ti-arrow-right"></i> 直接去下單</a>
+      <a class="btn btn-ghost" href="./index.html"><i class="ti ti-arrow-right"></i> 直接去下單</a>
     </div>
     <div class="rules-grid">
       <div class="rule-card">
@@ -498,8 +498,8 @@
   <div class="wrap">
     <a class="logo" href="#top"><span class="mark"><i class="ti ti-palette"></i></span>設計部服務入口</a>
     <div class="f-links">
-      <a href="https://maotaideptdesign-wq.github.io/work-card/">我要下單</a>
-      <a href="./index.html">進度看板</a>
+      <a href="./index.html">我要下單</a>
+      <a href="./kanban.html">進度看板</a>
       <a href="#faq">常見問題</a>
       <a href="#contact">聯絡窗口</a>
     </div>
@@ -534,7 +534,7 @@ function daysLeft(s){ const t=new Date(s); if(isNaN(t))return null; const n=new 
 function gotoCase(){
   const v = (document.getElementById('lookupInput').value || "").trim();
   if(!v) return;
-  let url = './index.html?id=' + encodeURIComponent(v);
+  let url = './kanban.html?id=' + encodeURIComponent(v);
   if(ACCESS_KEY) url += '&key=' + encodeURIComponent(ACCESS_KEY);
   location.href = url;
 }
@@ -737,7 +737,7 @@ function demoNews(){
   else { try{ ACCESS_KEY = localStorage.getItem('dc_key') || ''; }catch(e){ ACCESS_KEY = ''; } }
   // 讓所有「前往看板」的內部連結帶上金鑰，同事點過去不用再輸入
   if(ACCESS_KEY){
-    document.querySelectorAll('a[href^="./index.html"]').forEach(function(a){
+    document.querySelectorAll('a[href^="./kanban.html"]').forEach(function(a){
       a.href = './index.html?key=' + encodeURIComponent(ACCESS_KEY);
     });
   }
