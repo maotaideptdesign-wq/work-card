@@ -678,10 +678,10 @@
           <i class="ti ti-columns"></i> 即時設計進度追蹤
         </h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
-          需求送出後，您可以憑上方產生的案件編號，點擊下方按鈕前往「設計部進度看板」確認目前的排程進度與詳細狀態。
+          需求送出後，點擊下方按鈕即可直接開啟<strong>這張單</strong>的進度頁，查看目前狀態、負責設計師與進度備註；也可日後憑上方案件編號於看板查詢。
         </p>
-        <a href="https://docs.google.com/spreadsheets/d/1KMcp72tUFXoyelZRbYgQd5--jnBhIVUS3OcJ9dJ17rk/edit?usp=sharing" target="_blank" class="btn-main" style="width: 100%; justify-content: center; text-decoration: none; font-size: 1rem; padding: 14px; box-shadow: none;">
-          <i class="ti ti-external-link"></i> 前往設計進度看板
+        <a id="boardLink" href="#" target="_blank" rel="noopener" class="btn-main" style="width: 100%; justify-content: center; text-decoration: none; font-size: 1rem; padding: 14px; box-shadow: none;">
+          <i class="ti ti-progress-check"></i> 查看這張單的進度
         </a>
       </div>
       <button class="btn-action" onclick="location.reload()"><i class="ti ti-rotate-clockwise-2"></i> 再填一份</button>
@@ -691,6 +691,9 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRU24qBubqFPHYQa0kkSVzRe8LEB_5W3QfS6_nqXkdwc256NKzNa8PK6H_mIrWQBii/exec";
+  // 進度看板設定：送出成功後直接帶案號連過去（同一層目錄）
+  const BOARD_URL = "./kanban.html";
+  const BOARD_KEY = "dcMT7kq2Xr9vB4nZ8wLf";   // 看板存取金鑰，與 Code.gs 的 ACCESS_KEY 一致
   let selectedFiles = [];
   const MAX_FILE_MB = 5;
   const MAX_TOTAL_MB = 15;
@@ -1209,6 +1212,12 @@
       window.onbeforeunload = null;
       document.getElementById('displayId').innerText = data.ticketId;
       document.getElementById('successMeta').innerText = `送出時間：${data.timestamp}｜提交人：${data.applicant}`;
+      // 讓「前往進度看板」直接開啟本案件（帶案號與金鑰）
+      const bl = document.getElementById('boardLink');
+      if (bl) {
+        bl.href = BOARD_URL + '?id=' + encodeURIComponent(data.ticketId)
+                + (BOARD_KEY ? '&key=' + encodeURIComponent(BOARD_KEY) : '');
+      }
       document.getElementById('formArea').style.display = 'none';
       document.getElementById('successPanel').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
