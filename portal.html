@@ -738,7 +738,11 @@ function demoNews(){
   // 讓所有「前往看板」的內部連結帶上金鑰，同事點過去不用再輸入
   if(ACCESS_KEY){
     document.querySelectorAll('a[href^="./kanban.html"]').forEach(function(a){
-      a.href = './index.html?key=' + encodeURIComponent(ACCESS_KEY);
+      var base = a.getAttribute('href').split('?')[0];        // 保留 ./kanban.html，不改成下單頁
+      var qs = a.getAttribute('href').split('?')[1] || '';    // 保留既有參數（如 ?id=）
+      var params = new URLSearchParams(qs);
+      params.set('key', ACCESS_KEY);
+      a.href = base + '?' + params.toString();
     });
   }
   loadCases();
