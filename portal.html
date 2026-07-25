@@ -85,8 +85,13 @@
   .stage-desc{font-size:.78rem;color:var(--text-muted);text-align:center;margin-top:11px;padding:0 4px;line-height:1.45}
   .stage:not(:last-child) .stage-node::after{content:'';position:absolute;top:50%;right:-18px;width:20px;height:2px;background:var(--primary-soft-border);z-index:1}
   .stage:not(:last-child) .stage-node::before{content:'';position:absolute;top:50%;right:-18px;transform:translateY(-50%);border-left:7px solid var(--primary-soft-border);border-top:5px solid transparent;border-bottom:5px solid transparent;z-index:1}
-  .flow-except{margin-top:26px;padding-top:24px;border-top:1px dashed var(--border)}
-  .flow-except .ex-label{font-size:.76rem;font-weight:800;letter-spacing:.06em;color:var(--text-muted);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .flow-except{margin-top:22px;padding-top:20px;border-top:1px dashed var(--border)}
+  .flow-except>summary{list-style:none;cursor:pointer;font-size:.78rem;font-weight:800;letter-spacing:.04em;color:var(--text-muted);display:flex;align-items:center;gap:8px;padding:4px 0}
+  .flow-except>summary::-webkit-details-marker{display:none}
+  .flow-except>summary .ex-toggle{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--primary);background:var(--primary-soft);border:1px solid var(--primary-soft-border);border-radius:999px;padding:2px 11px;white-space:nowrap}
+  .flow-except[open]>summary .ex-toggle::after{content:'';}
+  .flow-except[open]>summary .ex-toggle{color:var(--text-muted);background:var(--bg-field);border-color:var(--border)}
+  .flow-except .ex-grid{margin-top:14px}
   .ex-grid{display:flex;gap:12px;flex-wrap:wrap}
   .ex-item{flex:1 1 200px;background:var(--bg-field);border:1px solid var(--border);border-left:4px solid var(--exc);border-radius:var(--r-md);padding:12px 14px}
   .ex-item b{font-size:.9rem;color:var(--text-main);display:block;margin-bottom:3px}
@@ -181,19 +186,33 @@
   .faq .tip.warn-tip{background:var(--warning-soft);border-color:var(--warning-border);color:#92400e}
 
   /* ---------- 常用資源 ---------- */
-  .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-  .res-card{display:flex;align-items:center;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:16px 18px;transition:.15s;color:inherit}
-  .res-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px)}
-  .res-card .r-ic{width:42px;height:42px;border-radius:11px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
-  .res-card b{font-size:.92rem;font-weight:700;color:var(--text-main);display:block}
-  .res-card span{font-size:.76rem;color:var(--text-muted)}
-  .res-card.todo{border-style:dashed;opacity:.8;cursor:default}
-  .res-card.todo:hover{transform:none;border-color:var(--border);box-shadow:none}
-  .res-card.todo .r-ic{background:#f1f5f9;color:#94a3b8}
+  .size-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:6px;box-shadow:var(--shadow-sm);overflow:hidden}
+  .size-tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+  .size-tbl thead th{text-align:left;font-size:.74rem;font-weight:800;letter-spacing:.03em;color:var(--text-muted);padding:14px 16px;border-bottom:2px solid var(--border);white-space:nowrap}
+  .size-tbl tbody td{padding:13px 16px;border-bottom:1px solid var(--border);color:var(--text-main)}
+  .size-tbl tbody tr:last-child td{border-bottom:none}
+  .size-tbl tbody tr:hover{background:var(--primary-soft)}
+  .size-tbl td b{font-weight:700}
+  .size-tbl td:nth-child(2),.size-tbl td:nth-child(3){font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--ink)}
+  .size-tbl td:nth-child(4){font-size:.82rem;color:var(--text-muted)}
+  .size-note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px 8px;font-size:.83rem;line-height:1.65;color:var(--text-muted)}
+  .size-note i{color:var(--primary);font-size:1.05rem;flex-shrink:0;margin-top:1px}
+  .size-note b{color:var(--text-main)}
+  @media (max-width:640px){
+    .size-tbl thead{display:none}
+    .size-tbl,.size-tbl tbody,.size-tbl tr,.size-tbl td{display:block;width:100%}
+    .size-tbl tbody tr{border:1px solid var(--border);border-radius:var(--r-md);margin-bottom:10px;padding:4px 0}
+    .size-tbl tbody td{border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;gap:16px;padding:9px 14px}
+    .size-tbl tbody td:last-child{border-bottom:none}
+    .size-tbl tbody td::before{content:attr(data-l);font-size:.72rem;font-weight:700;color:var(--text-muted);flex-shrink:0}
+    .size-tbl td:nth-child(2),.size-tbl td:nth-child(3),.size-tbl td:nth-child(4){text-align:right}
+  }
 
   /* ---------- 聯絡窗口 ---------- */
   .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-  .contact-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm)}
+  .contact-card{display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);color:inherit;transition:.15s}
+  a.contact-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px)}
+  .contact-card .c-line{word-break:break-all}
   .contact-card .c-role{font-size:.74rem;font-weight:700;letter-spacing:.05em;color:var(--primary);margin-bottom:10px}
   .contact-card .c-name{font-size:1.05rem;font-weight:800;color:var(--ink);margin-bottom:4px}
   .contact-card .c-line{font-size:.85rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;margin-top:7px}
@@ -279,6 +298,22 @@
   </div>
 </div>
 
+<!-- 公告區 -->
+<section class="block" id="news">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="label">Announcements</div>
+        <h2>設計部公告</h2>
+        <p>檔期調整、系統更新、活動通知都會貼在這裡。</p>
+      </div>
+      <span class="load" id="annMeta" style="padding:0"></span>
+    </div>
+    <div id="annWarn"></div>
+    <div class="ann-list" id="annList"><div class="load"><i class="ti ti-loader-2 spin"></i> 載入公告中…</div></div>
+  </div>
+</section>
+
 <!-- 流程圖 -->
 <section class="block" id="flow">
   <div class="wrap">
@@ -298,15 +333,15 @@
         <div class="stage" data-stage="已發印" style="--nb:var(--s5);--nt:var(--s5t)"><div class="stage-node"><span class="stage-num">05</span>已發印</div><div class="stage-desc">校稿定案，交付檔案或送印刷廠</div><span class="stage-count">–</span></div>
         <div class="stage" data-stage="已結案" style="--nb:var(--s6);--nt:var(--s6t)"><div class="stage-node"><span class="stage-num">06</span>已結案</div><div class="stage-desc">案件完成，成品連結一併附上</div><span class="stage-count">–</span></div>
       </div>
-      <div class="flow-except">
-        <div class="ex-label"><i class="ti ti-alert-triangle" style="color:var(--warning)"></i> 流程可能暫停的狀況——多半需要你這邊先行動</div>
+      <details class="flow-except">
+        <summary class="ex-label"><i class="ti ti-alert-triangle" style="color:var(--warning)"></i> 流程可能暫停的狀況——多半需要你這邊先行動<span class="ex-toggle">展開</span></summary>
         <div class="ex-grid">
           <div class="ex-item" data-stage="資訊不全" style="--exc:#9d1c1c"><b>資訊不全<span class="ex-cnt">–</span></b><span>文案或規格缺漏，補齊後才能重新排程</span></div>
           <div class="ex-item" data-stage="老闆決策中" style="--exc:#c47b3a"><b>老闆決策中<span class="ex-cnt">–</span></b><span>等待上層裁示，設計部暫停動作</span></div>
           <div class="ex-item" data-stage="暫緩執行" style="--exc:#64748b"><b>暫緩執行<span class="ex-cnt">–</span></b><span>已受理但因故擱置，待通知重啟</span></div>
           <div class="ex-item" data-stage="作廢" style="--exc:#a52a2a"><b>作廢<span class="ex-cnt">–</span></b><span>需求取消或無法達成，單據終止</span></div>
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
@@ -392,7 +427,7 @@
             <li>是的，文案務必為「<b>最終校對無誤的電子檔</b>」。為避免辨識錯誤與責任模糊，設計部不提供文字謄打與拍照看圖打字服務。</li>
             <li>若有指定素材、過去範本或規範檔（如 AI／PSD／高解析圖片），請一併附上雲端連結，資料越齊全製作越快速。</li>
           </ul>
-          <div class="tip"><i class="ti ti-bulb"></i><span><b>小提醒：</b>例行賀卡、內部告示等基礎庶務，歡迎優先使用設計部建立的 <a href="#resources">Canva 庶務模板庫</a> 自行快速編輯！</span></div>
+          <div class="tip"><i class="ti ti-bulb"></i><span><b>小提醒：</b>例行賀卡、內部告示等基礎庶務，歡迎優先使用設計部建立的 Canva 庶務模板庫 自行快速編輯（連結請洽設計部）！</span></div>
         </div>
       </details>
       <details>
@@ -425,37 +460,34 @@
     <div class="sec-head">
       <div>
         <div class="label">Resources</div>
-        <h2>常用資源與範本</h2>
-        <p>把品牌素材、範本、規格表的連結放這裡，同事就不用每次來要。以下為版位示意，換成實際連結即可。</p>
+        <h2>常用尺寸表</h2>
+        <p>下單前可先參考常見印刷物的尺寸。實際製作仍以與設計部確認的規格為準；特殊尺寸歡迎於下單時選「規格諮詢」。</p>
       </div>
     </div>
-    <div class="res-grid">
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-template"></i></div><div><b>Canva 庶務模板庫<span class="todo-tag">待補連結</span></b><span>賀卡、告示可自行編輯</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-photo"></i></div><div><b>品牌 Logo 檔<span class="todo-tag">待補</span></b><span>各格式標準識別</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-palette"></i></div><div><b>品牌色票<span class="todo-tag">待補</span></b><span>CMYK / RGB / HEX</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-presentation"></i></div><div><b>簡報範本<span class="todo-tag">待補</span></b><span>公司標準版型</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-ruler-2"></i></div><div><b>常用尺寸表<span class="todo-tag">待補</span></b><span>印刷 / 數位規格</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-typography"></i></div><div><b>指定字型<span class="todo-tag">待補</span></b><span>授權字型下載</span></div></a>
-      <a class="res-card todo" href="#" onclick="return false"><div class="r-ic"><i class="ti ti-folder"></i></div><div><b>過往成品庫<span class="todo-tag">待補</span></b><span>可參考的既有案例</span></div></a>
+    <div class="size-wrap">
+      <table class="size-tbl">
+        <thead>
+          <tr><th>品項</th><th>成品尺寸（寬 × 高）</th><th>含出血尺寸</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-l="品項"><b>海報 A1</b></td><td data-l="成品尺寸">594 × 841 mm</td><td data-l="含出血">600 × 847 mm</td><td data-l="備註">大型張貼、活動主視覺</td></tr>
+          <tr><td data-l="品項"><b>海報 A2</b></td><td data-l="成品尺寸">420 × 594 mm</td><td data-l="含出血">426 × 600 mm</td><td data-l="備註">室內公告、櫥窗</td></tr>
+          <tr><td data-l="品項"><b>海報 B2</b></td><td data-l="成品尺寸">515 × 728 mm</td><td data-l="含出血">521 × 734 mm</td><td data-l="備註">賣場常用大版</td></tr>
+          <tr><td data-l="品項"><b>傳單 A4</b></td><td data-l="成品尺寸">210 × 297 mm</td><td data-l="含出血">216 × 303 mm</td><td data-l="備註">DM、單張文宣</td></tr>
+          <tr><td data-l="品項"><b>傳單 A5</b></td><td data-l="成品尺寸">148 × 210 mm</td><td data-l="含出血">154 × 216 mm</td><td data-l="備註">小型 DM、夾報</td></tr>
+          <tr><td data-l="品項"><b>賀卡（對摺）</b></td><td data-l="成品尺寸">攤開 210 × 148 mm</td><td data-l="含出血">216 × 154 mm</td><td data-l="備註">摺後約 105 × 148 mm</td></tr>
+          <tr><td data-l="品項"><b>名片（橫）</b></td><td data-l="成品尺寸">90 × 54 mm</td><td data-l="含出血">94 × 58 mm</td><td data-l="備註">台灣標準名片</td></tr>
+          <tr><td data-l="品項"><b>名片（直）</b></td><td data-l="成品尺寸">54 × 90 mm</td><td data-l="含出血">58 × 94 mm</td><td data-l="備註">直式版型</td></tr>
+        </tbody>
+      </table>
+      <div class="size-note">
+        <i class="ti ti-info-circle"></i>
+        <span><b>出血</b>是指印刷時預留的裁切邊（每邊 3 mm），設計檔請做到「含出血尺寸」，重要文字則內縮至安全範圍內，避免裁切時被切到。解析度請設定 300 dpi、色彩模式 CMYK。</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 公告區 -->
-<section class="block" id="news">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="label">Announcements</div>
-        <h2>設計部公告</h2>
-        <p>檔期調整、系統更新、活動通知都會貼在這裡。</p>
-      </div>
-      <span class="load" id="annMeta" style="padding:0"></span>
-    </div>
-    <div id="annWarn"></div>
-    <div class="ann-list" id="annList"><div class="load"><i class="ti ti-loader-2 spin"></i> 載入公告中…</div></div>
-  </div>
-</section>
 
 <!-- 聯絡窗口 -->
 <section class="block" id="contact" style="background:#fff;border-top:1px solid var(--border)">
@@ -464,31 +496,25 @@
       <div>
         <div class="label">Contact</div>
         <h2>聯絡窗口</h2>
-        <p>找對人、走對流程。以下為版位示意，換成實際姓名與聯絡方式即可。</p>
+        <p>有任何需求或疑問，歡迎透過 Email 與設計團隊聯繫。</p>
       </div>
     </div>
     <div class="contact-grid">
-      <div class="contact-card">
-        <div class="c-role">一般需求窗口</div>
-        <div class="c-name">〇〇〇 <span class="todo-tag">待補</span></div>
-        <div class="c-line"><i class="ti ti-mail"></i> name@company.com</div>
-        <div class="c-line"><i class="ti ti-phone"></i> 分機 000</div>
-        <div class="c-line"><i class="ti ti-brand-slack"></i> @slack-handle</div>
-      </div>
-      <div class="contact-card urgent">
-        <div class="c-role">急件 / 當日聯繫</div>
-        <div class="c-name">〇〇〇 <span class="todo-tag">待補</span></div>
-        <div class="c-line"><i class="ti ti-phone"></i> 分機 000</div>
-        <div class="c-line"><i class="ti ti-message"></i> 行動 09xx-xxx-xxx</div>
-        <div class="c-line"><i class="ti ti-info-circle"></i> 請先於下單標註「緊急」</div>
-      </div>
-      <div class="contact-card">
+      <a class="contact-card" href="mailto:design@splendid-marketing.com.tw">
         <div class="c-role">設計團隊</div>
-        <div class="c-name">團隊成員 <span class="todo-tag">待補</span></div>
-        <div class="c-line"><i class="ti ti-user"></i> 〇〇〇 · 平面 / 包裝</div>
-        <div class="c-line"><i class="ti ti-user"></i> 〇〇〇 · 數位 / 影像</div>
-        <div class="c-line"><i class="ti ti-user"></i> 〇〇〇 · 印製 / 發包</div>
-      </div>
+        <div class="c-name">Design Team</div>
+        <div class="c-line"><i class="ti ti-mail"></i> design@splendid-marketing.com.tw</div>
+      </a>
+      <a class="contact-card" href="mailto:maotaidept.design@gmail.com">
+        <div class="c-role">設計團隊</div>
+        <div class="c-name">Abus</div>
+        <div class="c-line"><i class="ti ti-mail"></i> maotaidept.design@gmail.com</div>
+      </a>
+      <a class="contact-card" href="mailto:maotaid007@gmail.com">
+        <div class="c-role">設計團隊</div>
+        <div class="c-name">設計助理</div>
+        <div class="c-line"><i class="ti ti-mail"></i> maotaid007@gmail.com</div>
+      </a>
     </div>
   </div>
 </section>
@@ -745,6 +771,13 @@ function demoNews(){
       a.href = base + '?' + params.toString();
     });
   }
+  // 「流程可能暫停的狀況」展開/收合時切換提示字
+  (function(){
+    var d = document.querySelector('.flow-except');
+    if(d){ var t = d.querySelector('.ex-toggle');
+      d.addEventListener('toggle', function(){ if(t) t.textContent = d.open ? '收合' : '展開'; });
+    }
+  })();
   loadCases();
   loadNews();
   setInterval(function(){ if(!LOCKED){ loadCases(); loadNews(); } }, 300000); // 每 5 分鐘更新
